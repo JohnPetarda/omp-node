@@ -20,11 +20,14 @@ jobs:
           clean: true
           submodules: recursive
           fetch-depth: 0
+      - name: Fix GLM CMake Version
+        run: |
+          powershell -Command "(Get-Content deps/sdk/lib/glm/CMakeLists.txt) -replace 'cmake_minimum_required\(.*\)', 'cmake_minimum_required(VERSION 3.5)' | Set-Content deps/sdk/lib/glm/CMakeLists.txt"
       - name: Generate build files
         run: |
           mkdir build
           cd build
-          cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5 ..
+          cmake -DCMAKE_BUILD_TYPE=Release ..
           cmake --build . --config Release
       - name: Create a folder for release
         shell: bash
@@ -49,11 +52,14 @@ jobs:
           clean: true
           submodules: recursive
           fetch-depth: 0
+      - name: Fix GLM CMake Version
+        run: |
+          powershell -Command "(Get-Content deps/sdk/lib/glm/CMakeLists.txt) -replace 'cmake_minimum_required\(.*\)', 'cmake_minimum_required(VERSION 3.5)' | Set-Content deps/sdk/lib/glm/CMakeLists.txt"
       - name: Generate build files
         run: |
           mkdir build
           cd build
-          cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5 .. -A Win32
+          cmake -DCMAKE_BUILD_TYPE=Release .. -A Win32
           cmake --build . --config Release
       - name: Create a folder for release
         shell: bash
