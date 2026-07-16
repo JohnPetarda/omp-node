@@ -20,11 +20,18 @@ jobs:
           clean: true
           submodules: recursive
           fetch-depth: 0
+      
+      # FIX-UL DEFINITIV: Forțăm o versiune veche de CMake care nu comentează
+      - name: Setup older CMake to bypass GLM errors
+        uses: jwlawson/actions-setup-cmake@v2
+        with:
+          cmake-version: '3.24.x'
+
       - name: Generate build files
         run: |
           mkdir build
           cd build
-          cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5 ..
+          cmake -DCMAKE_BUILD_TYPE=Release ..
           cmake --build . --config Release
       - name: Create a folder for release
         shell: bash
@@ -49,11 +56,18 @@ jobs:
           clean: true
           submodules: recursive
           fetch-depth: 0
+          
+      # FIX-UL DEFINITIV
+      - name: Setup older CMake to bypass GLM errors
+        uses: jwlawson/actions-setup-cmake@v2
+        with:
+          cmake-version: '3.24.x'
+
       - name: Generate build files
         run: |
           mkdir build
           cd build
-          cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5 .. -A Win32
+          cmake -DCMAKE_BUILD_TYPE=Release .. -A Win32
           cmake --build . --config Release
       - name: Create a folder for release
         shell: bash
